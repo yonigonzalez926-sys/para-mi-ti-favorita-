@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi tía favorita ❤️ - Spider-Man</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Dancing+Script:wght@500;600;700&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        spidey: {
+                            red: '#e62429',
+                            darkRed: '#9b0000',
+                            blue: '#0055ff',
+                            darkBlue: '#001d66',
+                            dark: '#0a0d1a',
+                            card: '#121829',
+                            gold: '#ffcc00'
+                        }
+                    },
+                    fontFamily: {
+                        comic: ['"Bangers"', 'cursive'],
+                        cursive: ['"Dancing Script"', 'cursive'],
+                        sans: ['"Montserrat"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #080a14;
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            user-select: none;
+            background-image: 
+                radial-gradient(circle at 50% 20%, rgba(230, 36, 41, 0.25) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 85, 255, 0.2) 0%, transparent 50%);
+        }
+
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Título con resplandor neón estilo Spidey */
+        .spidey-title {
+            text-shadow: 
+                0 0 10px rgba(230, 36, 41, 0.8),
+                0 0 20px rgba(230, 36, 41, 0.5),
+                3px 3px 0px #000;
+        }
+
+        .spidey-glow {
+            border: 2px solid rgba(230, 36, 41, 0.6);
+            box-shadow: 0 0 25px rgba(230, 36, 41, 0.35), inset 0 0 15px rgba(0, 85, 255, 0.2);
+        }
+
+        /* Estilo para el Sobre */
+        .envelope-container {
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .envelope-container:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .envelope-body {
+            background: linear-gradient(135deg, #cc1116 0%, #880004 100%);
+            border: 3px solid #ffcc00;
+            box-shadow: 0 15px 35px rgba(230, 36, 41, 0.4), 0 0 20px rgba(0, 85, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Trama de telaraña en el sobre */
+        .web-pattern {
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle at 50% 50%, transparent 60%, rgba(255, 255, 255, 0.1) 61%),
+                              linear-gradient(45deg, transparent 48%, rgba(255, 255, 255, 0.08) 50%, transparent 52%),
+                              linear-gradient(-45deg, transparent 48%, rgba(255, 255, 255, 0.08) 50%, transparent 52%);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        /* Modal y Carta */
+        .modal-backdrop {
+            background: rgba(5, 7, 15, 0.92);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Efecto de carta saliendo */
+        .letter-paper {
+            background: #fffdf7;
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 16px 16px;
+            border: 2px solid #e62429;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Flotación suave para arañitas */
+        @keyframes spiderFloat {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 0.8; }
+            50% { transform: translateY(50vh) rotate(180deg); }
+            100% { transform: translateY(105vh) rotate(360deg); opacity: 0.2; }
+        }
+
+        .spider-particle {
+            position: fixed;
+            color: #e62429;
+            pointer-events: none;
+            z-index: 2;
+            filter: drop-shadow(0 0 5px rgba(230,36,41,0.6));
+        }
+    </style>
+</head>
+<body class="relative min-h-screen flex flex-col items-center justify-between p-4 md:p-8">
+
+    <!-- Canvas para Partículas de Arañas y Telarañas -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- ENCABEZADO estilo Spider-Man -->
+    <header class="text-center my-6 z-10 max-w-xl mx-auto">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-red-500/50 bg-red-950/40 text-red-400 text-xs tracking-widest uppercase mb-3">
+            <i class="fa-solid fa-spider text-sm text-red-500"></i> Edición Especial
+        </div>
+        <h1 class="font-comic text-5xl md:text-7xl text-red-500 tracking-wider spidey-title uppercase mb-1">
+            Para mi tía favorita
+        </h1>
+        <p class="text-xs md:text-sm text-blue-300 font-medium tracking-wide">
+            🕸️ ¡Un detalle único hecho con mucho cariño para ti! 🕸️
+        </p>
+    </header>
+
+    <!-- SECCIÓN PRINCIPAL: CARTA INTERACTIVA EN SOBRE SPIDER-MAN -->
+    <main class="z-10 w-full max-w-md my-auto">
+        <div onclick="openLetterModal()" class="envelope-container">
+            <div class="envelope-body p-8 md:p-10 rounded-3xl text-center relative flex flex-col items-center justify-center min-h-[260px]">
+                <div class="web-pattern"></div>
+
+                <!-- Araña Central / Sello -->
+                <div class="w-20 h-20 rounded-full bg-black border-2 border-red-500 flex items-center justify-center mb-4 shadow-xl relative z-10 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-spider text-4xl text-red-500"></i>
+                </div>
+
+                <h2 class="font-comic text-2xl md:text-3xl text-yellow-400 tracking-wide uppercase relative z-10">
+                    Toca aquí para abrir tu carta
+                </h2>
+                <p class="text-xs text-white/80 mt-2 font-medium relative z-10">
+                    Hay algo muy especial esperándote adentro ❤️
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL CON LA CARTA (EN LETRA CURSIVA) -->
+    <div id="letter-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop opacity-0 pointer-events-none transition-all duration-300">
+        <div class="letter-paper text-gray-900 max-w-lg w-full rounded-3xl p-6 md:p-10 relative shadow-2xl border-4 border-red-600 max-h-[85vh] flex flex-col">
+            
+            <!-- Botón Cerrar -->
+            <button onclick="closeLetterModal()" class="absolute top-4 right-4 text-red-600 hover:text-black text-2xl w-9 h-9 rounded-full bg-red-100 flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Contenido de la Carta en Cursiva -->
+            <div class="overflow-y-auto pr-2 space-y-4 text-left font-cursive leading-relaxed">
+                <!-- Título de la Carta -->
+                <div class="text-center mb-4 border-b border-red-200 pb-3">
+                    <i class="fa-solid fa-heart text-red-600 text-2xl mb-1 block"></i>
+                    <h3 class="text-3xl md:text-4xl text-red-700 font-bold">Querida Tía,</h3>
+                </div>
+
+                <!-- Mensaje bonito -->
+                <p class="text-xl md:text-2xl text-gray-800">
+                    Querida tía, hoy quería dedicarte estas palabras porque eres una persona extremadamente especial en mi vida. Gracias por tu alegría constante, por tus abrazos sinceros y por siempre estar ahí cuando se te necesita.
+                </p>
+
+                <p class="text-xl md:text-2xl text-gray-800">
+                    Tenerte como tía es un regalo enorme. Tu apoyo, tus palabras y tu cariño hacen que todo sea más bonito. Nunca olvides lo mucho que te quiero y lo importante que eres para todos nosotros.
+                </p>
+
+                <p class="text-xl md:text-2xl text-gray-800">
+                    ¡Gracias por ser simplemente la mejor tía del mundo entero!
+                </p>
+
+                <!-- Firma -->
+                <div class="text-right pt-4 border-t border-red-200">
+                    <p class="text-2xl md:text-3xl text-red-700 font-bold">Con todo mi cariño y admiración,</p>
+                    <p class="text-xl md:text-2xl text-blue-800 font-semibold mt-1">¡Te quiero muchísimo! ❤️🕸️</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="z-10 text-center py-4 text-xs text-blue-300/60 font-light">
+        <p>Hecho con todo el amor del mundo 🕷️❤️</p>
+    </footer>
+
+    <!-- JAVASCRIPT DE INTERACCIONES Y ANIMACIONES -->
+    <script>
+        // Abrir y Cerrar Modal
+        function openLetterModal() {
+            const modal = document.getElementById('letter-modal');
+            if (modal) modal.classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        function closeLetterModal() {
+            const modal = document.getElementById('letter-modal');
+            if (modal) modal.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        // Crear partículas flotantes de arañitas en el fondo
+        function createSpiderParticles() {
+            const container = document.body;
+            for (let i = 0; i < 12; i++) {
+                const spider = document.createElement('i');
+                spider.className = 'fa-solid fa-spider spider-particle';
+                spider.style.fontSize = `${Math.random() * 14 + 12}px`;
+                spider.style.left = `${Math.random() * 95}vw`;
+                spider.style.animation = `spiderFloat ${Math.random() * 8 + 7}s linear infinite`;
+                spider.style.animationDelay = `${Math.random() * 5}s`;
+                container.appendChild(spider);
+            }
+        }
+
+        // Fondo de Partículas Interactivas en Canvas
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas ? canvas.getContext('2d') : null;
+        let particles = [];
+
+        function resizeCanvas() {
+            if (!canvas) return;
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const particleColors = ['#e62429', '#0055ff', '#ffcc00', '#ffffff'];
+
+        class Particle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * (canvas ? canvas.width : 500);
+                this.y = (canvas ? canvas.height : 500) + Math.random() * 20;
+                this.size = Math.random() * 2.5 + 1;
+                this.speedY = Math.random() * 0.7 + 0.3;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.6 + 0.2;
+                this.color = particleColors[Math.floor(Math.random() * particleColors.length)];
+            }
+            update() {
+                this.y -= this.speedY;
+                this.x += this.speedX;
+                if (this.y < -10) this.reset();
+            }
+            draw() {
+                if (!ctx) return;
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const count = Math.min(Math.floor(window.innerWidth / 15), 40);
+            for (let i = 0; i < count; i++) particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            if (canvas && ctx) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => { p.update(); p.draw(); });
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        window.onload = () => {
+            initParticles();
+            animateParticles();
+            createSpiderParticles();
+        };
+    </script>
+</body>
+</html>
